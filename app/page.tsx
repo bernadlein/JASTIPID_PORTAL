@@ -1,34 +1,71 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { staff } from "@/data/staff";
 import { shippingList } from "@/data/shipping";
 import { orderAddress, orderFormats, pickupAddresses } from "@/data/addresses";
-
-function Card({ children }: { children: React.ReactNode }) {
-  return <div className="bg-white rounded-2xl shadow p-6">{children}</div>;
-}
+import QuickActions from "@/components/QuickActions";
+import AdminCard from "@/components/AdminCard";
+import RouteCard from "@/components/RouteCard";
 
 export default function Home() {
+  const waNumbers = staff.map((s) => s.phone);
+
   return (
-    <div className="grid gap-8">
-      <section className="text-center">
-        <h1 className="text-3xl font-bold mb-2 text-green-700">Jastip ID</h1>
-        <p className="text-gray-600">Harga ongkir per kg, kontak admin, alamat pemesanan & pengambilan</p>
+    <div className="grid gap-12">
+      {/* HERO */}
+      <section className="relative overflow-hidden rounded-3xl">
+        <div className="absolute inset-0 bg-gradient-to-r from-green-600 to-emerald-500 opacity-90" />
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="relative z-10 p-8 md:p-12 text-white"
+        >
+          <h1 className="text-3xl md:text-5xl font-extrabold leading-tight">
+            Jastip ID
+          </h1>
+          <p className="mt-3 md:mt-4 text-white/90 max-w-2xl">
+            Kirim & titip barang antarpulau makin gampang. Cek ongkir, kontak admin, alamat
+            pemesanan hingga titik pengambilan — semua di satu tempat.
+          </p>
+          <div className="mt-6">
+            <QuickActions waNumbers={waNumbers} />
+          </div>
+        </motion.div>
+
+        {/* Ornamen */}
+        <div className="absolute -bottom-24 -right-24 w-72 h-72 bg-white/10 rounded-full blur-2xl" />
+        <div className="absolute -top-24 -left-24 w-72 h-72 bg-white/10 rounded-full blur-2xl" />
       </section>
 
-      <section className="grid gap-4">
-        <h2 className="font-semibold text-lg">Harga Ongkir per Rute</h2>
+      {/* RUTE & ONGKIR */}
+      <section className="grid gap-4" id="rute-ongkir">
+        <motion.h2
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.4 }}
+          className="text-lg font-semibold"
+        >
+          Rute & Ongkir
+        </motion.h2>
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
           {shippingList.map((s) => (
-            <Card key={s.id}>
-              <div className="text-sm text-gray-500">Rute</div>
-              <div className="font-semibold">{s.label}</div>
-              <div className="mt-2 text-2xl font-bold text-green-700">Rp {s.pricePerKg.toLocaleString("id-ID")}/kg</div>
-            </Card>
+            <RouteCard key={s.id} label={s.label} price={s.pricePerKg} />
           ))}
         </div>
       </section>
 
+      {/* ALAMAT PEMESANAN & PENGAMBILAN */}
       <section className="grid md:grid-cols-2 gap-6">
-        <Card>
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.4 }}
+          className="bg-white rounded-2xl shadow p-6"
+        >
           <h2 className="font-semibold mb-2">Alamat Pemesanan (Marketplace → Surabaya)</h2>
           <pre className="whitespace-pre-wrap text-sm text-gray-700">{orderAddress}</pre>
           <div className="mt-4">
@@ -41,8 +78,15 @@ export default function Home() {
               ))}
             </ul>
           </div>
-        </Card>
-        <Card>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.4 }}
+          className="bg-white rounded-2xl shadow p-6"
+        >
           <h2 className="font-semibold mb-2">Alamat Pengambilan</h2>
           <ul className="list-disc pl-5 text-sm text-gray-700 space-y-2">
             {pickupAddresses.map((p) => (
@@ -51,40 +95,31 @@ export default function Home() {
               </li>
             ))}
           </ul>
-        </Card>
+        </motion.div>
       </section>
 
+      {/* CEO */}
       <section className="grid gap-4">
-        <h2 className="font-semibold text-lg">CEO & Kontak WA</h2>
+        <motion.h2
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.4 }}
+          className="text-lg font-semibold"
+        >
+          CEO & Kontak WA
+        </motion.h2>
         <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-6">
           {staff.map((s) => (
-            <div key={s.phone} className="relative rounded-2xl shadow overflow-hidden group">
-              <img
-                src={s.photo || `https://i.pravatar.cc/600?u=${encodeURIComponent(s.name)}`}
-                alt={s.name}
-                className="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                <div className="font-semibold text-lg">{s.name}</div>
-                <div className="text-sm text-white/80">{s.role}</div>
-                <a
-                  href={`https://wa.me/${s.phone}`}
-                  className="inline-block mt-2 text-sm underline decoration-dotted"
-                  target="_blank"
-                >
-                  Hubungi via WhatsApp
-                </a>
-              </div>
-            </div>
+            <AdminCard
+              key={s.phone}
+              name={s.name}
+              role={s.role}
+              phone={s.phone}
+              photo={s.photo}
+            />
           ))}
         </div>
-      </section>
-
-      <section className="text-center">
-        <a href="/login" className="inline-block px-4 py-2 rounded-xl bg-green-600 hover:bg-green-700 text-white">
-          Login Admin untuk Buat Nota
-        </a>
       </section>
     </div>
   );
