@@ -11,7 +11,7 @@ export const staff: Staff[] = [
     name: "Bernad",
     role: "CEO",
     phone: "6285338391953", // ganti ke nomor asli
-    photo: "/bernad.jpg",
+    photo: "/Bernad.jpg",
   },
   {
     name: "Mega Lamawuran",
