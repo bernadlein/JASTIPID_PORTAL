@@ -1,33 +1,34 @@
+// data/staff.ts
 export type Staff = {
   name: string;
   role: string;
   phone: string; // 62xxxx tanpa +
-  photo?: string; // optional URL atau path di /public
+  photo?: string; // path di /public
 };
 
 export const staff: Staff[] = [
   {
     name: "Bernad",
     role: "CEO",
-    phone: "6281111111111",
-    photo: "https://i.pravatar.cc/600?u=bernad",
+    phone: "6285338391953", // ganti ke nomor asli
+    photo: "/bernad.jpg",
   },
   {
     name: "Mega Lamawuran",
     role: "CEO",
-    phone: "6282222222222",
-    photo: "https://i.pravatar.cc/600?u=mega-lamawuran",
+    phone: "6282146791727",
+    photo: "/mega.jpg",
   },
   {
     name: "Angelica Wulo",
     role: "CEO",
-    phone: "6283333333333",
-    photo: "https://i.pravatar.cc/600?u=angelica-wulo",
+    phone: "6281239885871",
+    photo: "/angelica.jpg",
   },
   {
     name: "Dio Pratama",
     role: "CEO",
-    phone: "6284444444444",
-    photo: "https://i.pravatar.cc/600?u=dio-pratama",
+    phone: "6282236042237",
+    photo: "/dio.jpg",
   },
 ];
