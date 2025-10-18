@@ -9,7 +9,7 @@ export default function NoteForm({
   sharePhones,
 }: {
   shippingList: Shipping[];
-  sharePhones: string[]; // nomor WA 62xxxx untuk tombol Bagikan
+  sharePhones: string[];
 }) {
   const [nama, setNama] = useState("");
   const [jumlah, setJumlah] = useState<number>(1);
@@ -56,7 +56,7 @@ export default function NoteForm({
   }
 
   return (
-    <div className="grid gap-6">
+    <div id="buat-nota" className="grid gap-6">
       <div className="grid gap-4 bg-white p-6 rounded-2xl shadow">
         <h2 className="text-lg font-semibold">Buat Nota</h2>
         <div className="grid sm:grid-cols-2 gap-4">
@@ -142,7 +142,7 @@ export default function NoteForm({
         </div>
       </div>
 
-      {/* Area tersembunyi untuk print */}
+      {/* Print-only area */}
       <div id="print-area" className="hidden print:block">
         <div ref={printRef} className="p-8">
           <h1 className="text-2xl font-bold mb-4">Nota Pengambilan Jastip</h1>
