@@ -29,21 +29,27 @@ export default function NoteForm({
   const notaNo = useMemo(() => "JID-" + Date.now().toString().slice(-8), []);
   const today = useMemo(() => {
     const d = new Date();
-    return d.toLocaleString("id-ID", { day: "2-digit", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit" });
+    return d.toLocaleString("id-ID", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
   }, []);
 
   const printRef = useRef<HTMLDivElement>(null);
 
   const teksNota = useMemo(() => {
     return (
-      `Nota Pengambilan Jastip\\n` +
-      `No: ${notaNo}\\n` +
-      `Tanggal: ${today}\\n` +
-      `Tujuan: ${tujuan}\\n` +
-      `Nama: ${nama}\\n` +
-      `Jumlah Barang: ${jumlah}\\n` +
-      `Berat: ${berat} kg\\n` +
-      `Harga/kg: ${formatIDR(hargaPerKg)}\\n` +
+      `Nota Pengambilan Jastip\n` +
+      `No: ${notaNo}\n` +
+      `Tanggal: ${today}\n` +
+      `Tujuan: ${tujuan}\n` +
+      `Nama: ${nama}\n` +
+      `Jumlah Barang: ${jumlah}\n` +
+      `Berat: ${berat} kg\n` +
+      `Harga/kg: ${formatIDR(hargaPerKg)}\n` +
       `Total Ongkir: ${formatIDR(total)}`
     );
   }, [notaNo, today, tujuan, nama, jumlah, berat, hargaPerKg, total]);
@@ -89,7 +95,7 @@ export default function NoteForm({
             </select>
           </label>
 
-          <label className="grid gap-1 text-sm">
+        <label className="grid gap-1 text-sm">
             <span>Harga per kg</span>
             <input
               className="border rounded-lg px-3 py-2 bg-gray-100"
@@ -137,10 +143,16 @@ export default function NoteForm({
         </div>
 
         <div className="flex flex-wrap gap-3">
-          <button onClick={handlePrint} className="px-4 py-2 rounded-xl bg-green-600 hover:bg-green-700 text-white">
+          <button
+            onClick={handlePrint}
+            className="px-4 py-2 rounded-xl bg-green-600 hover:bg-green-700 text-white"
+          >
             Cetak Nota
           </button>
-          <button onClick={handleCopy} className="px-4 py-2 rounded-xl border border-green-600 text-green-700">
+          <button
+            onClick={handleCopy}
+            className="px-4 py-2 rounded-xl border border-green-600 text-green-700"
+          >
             Salin Nota
           </button>
           {sharePhones.map((p, i) => (
@@ -161,17 +173,8 @@ export default function NoteForm({
         <div ref={printRef} className="p-10 text-gray-900">
           {/* Header: Logo + identitas */}
           <div className="flex items-center gap-4 border-b pb-4">
-            {/* Inline SVG Logo brand hijau */}
+            {/* Logo file dari /public/logo.svg */}
             <img src="/logo.svg" alt="Jastip ID" width={44} height={44} />
-              <defs>
-                <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
-                  <stop offset="0%" stopColor="#16a34a"/>
-                  <stop offset="100%" stopColor="#22c55e"/>
-                </linearGradient>
-              </defs>
-              <rect x="8" y="8" width="48" height="48" rx="12" fill="url(#g)"/>
-              <path d="M20 34l8 8 16-20" stroke="white" strokeWidth="4" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-            </img>
             <div>
               <div className="text-2xl font-extrabold leading-tight">Jastip ID</div>
               <div className="text-sm text-gray-600">Jasa Titip & Ekspedisi – Surabaya</div>
