@@ -3,6 +3,11 @@ import { redirect } from "next/navigation";
 import NoteForm from "@/components/NoteForm";
 import { staff } from "@/data/staff";
 import { shippingList } from "@/data/shipping";
+import StatCard from "@/components/StatCard";
+import AdminCard from "@/components/AdminCard";
+import RouteCard from "@/components/RouteCard";
+import QuickActions from "@/components/QuickActions";
+import { Boxes, Users, Truck } from "lucide-react";
 
 export default function DashboardPage() {
   if (!isAuthed()) redirect("/login?next=/dashboard");
@@ -10,43 +15,59 @@ export default function DashboardPage() {
   const sharePhones = staff.map((s) => s.phone);
 
   return (
-    <div className="grid gap-8">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Dashboard Admin</h1>
-        <form action="/api/logout" method="post">
-          <button className="px-3 py-2 rounded-xl border border-green-600 text-green-700">Logout</button>
-        </form>
-      </div>
+    <div className="grid gap-10">
+      {/* Hero */}
+      <section className="grid gap-3">
+        <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight">
+          Dashboard <span className="text-green-700">Jastip ID</span>
+        </h1>
+        <p className="text-gray-600">
+          Kelola nota, pantau rute, dan akses kontak admin dalam satu tempat.
+        </p>
+        <QuickActions waNumbers={sharePhones} />
+      </section>
 
-      {/* Kartu admin gaya movie */}
-      <section className="grid gap-4">
-        <h2 className="font-semibold text-lg">CEO</h2>
-        <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-6">
-          {staff.map((s) => (
-            <div key={s.phone} className="relative rounded-2xl shadow overflow-hidden group">
-              <img
-                src={s.photo || `https://i.pravatar.cc/600?u=${encodeURIComponent(s.name)}`}
-                alt={s.name}
-                className="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                <div className="font-semibold text-lg">{s.name}</div>
-                <div className="text-sm text-white/80">{s.role}</div>
-                <a
-                  href={`https://wa.me/${s.phone}`}
-                  className="inline-block mt-2 text-sm underline decoration-dotted"
-                  target="_blank"
-                >
-                  WhatsApp
-                </a>
-              </div>
-            </div>
+      {/* Stats */}
+      <section className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <StatCard icon={<Truck size={18} />} label="Rute aktif" value={`${shippingList.length} rute`} />
+        <StatCard icon={<Users size={18} />} label="CEO terdaftar" value={`${staff.length} orang`} />
+        <StatCard icon={<Boxes size={18} />} label="Harga/kg rata-rata"
+          value={`Rp ${Math.round(
+            shippingList.reduce((a, c) => a + c.pricePerKg, 0) / shippingList.length
+          ).toLocaleString("id-ID")}`} />
+      </section>
+
+      {/* Rute ongkir */}
+      <section className="grid gap-4" id="rute-ongkir">
+        <h2 className="text-lg font-semibold">Rute & Ongkir</h2>
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {shippingList.map((s) => (
+            <RouteCard key={s.id} label={s.label} price={s.pricePerKg} />
           ))}
         </div>
       </section>
 
-      <NoteForm shippingList={shippingList} sharePhones={sharePhones} />
+      {/* CEO */}
+      <section className="grid gap-4">
+        <h2 className="text-lg font-semibold">CEO</h2>
+        <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-6">
+          {staff.map((s) => (
+            <AdminCard
+              key={s.phone}
+              name={s.name}
+              role={s.role}
+              phone={s.phone}
+              photo={s.photo}
+            />
+          ))}
+        </div>
+      </section>
+
+      {/* Form Nota */}
+      <section className="grid gap-4">
+        <h2 className="text-lg font-semibold">Buat Nota</h2>
+        <NoteForm shippingList={shippingList} sharePhones={sharePhones} />
+      </section>
     </div>
   );
 }
