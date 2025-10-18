@@ -51,7 +51,7 @@ export default function ScheduleTable() {
           </tbody>
         </table>
         <div className="mt-3 text-xs text-gray-500">
-          *Perbarui <code>dateISO</code> di <code>data/schedule.ts</code> tiap minggu mengikuti jadwal DLU.
+          *Jadwal dapat berubbah mengikuti jadwal Kapal DLU*
         </div>
       </motion.div>
 
@@ -87,7 +87,7 @@ export default function ScheduleTable() {
           </tbody>
         </table>
         <div className="mt-3 text-xs text-gray-500">
-          *Sesuaikan tanggal closing sesuai kebijakan internal (mis. H-0). Hanya tampilkan tanggal & hari.
+          *Sesuaikan tanggal closing sesuai kebijakan internal . Jadwal dapat berubbah mengikuti jadwal Kapal DLU*
         </div>
       </motion.div>
     </div>
