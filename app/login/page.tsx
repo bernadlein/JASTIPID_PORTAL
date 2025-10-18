@@ -1,9 +1,10 @@
 "use client";
 
+import { Suspense } from "react";
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function LoginPage() {
+function LoginInner() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
@@ -41,5 +42,13 @@ export default function LoginPage() {
         <button className="px-4 py-2 rounded-xl bg-green-600 hover:bg-green-700 text-white">Masuk</button>
       </form>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="max-w-sm mx-auto p-6 text-sm text-gray-600">Memuat...</div>}>
+      <LoginInner />
+    </Suspense>
   );
 }
