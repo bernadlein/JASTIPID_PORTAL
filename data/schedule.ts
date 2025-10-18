@@ -1,22 +1,27 @@
-export type ScheduleRow = {
+// data/schedule.ts
+export type WeeklySailing = {
   id: string;
-  route: string;
-  days: string; // contoh: "Senin, Rabu, Jumat"
-  time: string; // contoh: "10:00"
+  route: string;     // contoh: "Surabaya → Maumere"
+  operator: string;  // contoh: "Darma Lautan Utama"
+  dateISO: string;   // "YYYY-MM-DD" → ganti tiap minggu sesuai jadwal kapal DLU
 };
 
-export const dispatchSchedule: ScheduleRow[] = [
-  { id: "ende", route: "Surabaya → Ende", days: "Senin, Rabu, Jumat", time: "10:00" },
-  { id: "lembata", route: "Surabaya → Lembata", days: "Selasa, Kamis, Sabtu", time: "10:00" },
-  { id: "adonara", route: "Surabaya → Adonara", days: "Selasa, Kamis, Sabtu", time: "10:00" },
-  { id: "larantuka", route: "Surabaya → Larantuka", days: "Senin & Kamis", time: "11:00" },
-  { id: "maumere", route: "Surabaya → Maumere", days: "Rabu & Sabtu", time: "11:00" },
+// GANTI dateISO ke tanggal keberangkatan berikutnya
+export const weeklySailings: WeeklySailing[] = [
+  {
+    id: "dlu-maumere",
+    route: "Surabaya → Maumere",
+    operator: "Darma Lautan Utama",
+    dateISO: "2025-10-25", // <-- UBAH SETIAP MINGGU
+  },
 ];
 
-export const cutoffSchedule: ScheduleRow[] = [
-  { id: "ende", route: "Surabaya → Ende", days: "H-0 (hari keberangkatan)", time: "17:00" },
-  { id: "lembata", route: "Surabaya → Lembata", days: "H-0", time: "17:00" },
-  { id: "adonara", route: "Surabaya → Adonara", days: "H-0", time: "17:00" },
-  { id: "larantuka", route: "Surabaya → Larantuka", days: "H-0", time: "16:00" },
-  { id: "maumere", route: "Surabaya → Maumere", days: "H-0", time: "16:00" },
+// (opsional) jika ingin tampilkan "Closing Terima Paket" pakai tanggal yang sama atau Anda bisa bedakan
+export const weeklyClosing: WeeklySailing[] = [
+  {
+    id: "closing-maumere",
+    route: "Surabaya → Maumere",
+    operator: "Darma Lautan Utama",
+    dateISO: "2025-10-25", // <-- UBAH JUGA JIKA PERLU
+  },
 ];
