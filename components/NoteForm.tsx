@@ -162,7 +162,7 @@ export default function NoteForm({
           {/* Header: Logo + identitas */}
           <div className="flex items-center gap-4 border-b pb-4">
             {/* Inline SVG Logo brand hijau */}
-            <svg width="44" height="44" viewBox="0 0 64 64" aria-hidden="true">
+            <img src="/logo.svg" alt="Jastip ID" width={44} height={44} />
               <defs>
                 <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
                   <stop offset="0%" stopColor="#16a34a"/>
@@ -171,7 +171,7 @@ export default function NoteForm({
               </defs>
               <rect x="8" y="8" width="48" height="48" rx="12" fill="url(#g)"/>
               <path d="M20 34l8 8 16-20" stroke="white" strokeWidth="4" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
+            </img>
             <div>
               <div className="text-2xl font-extrabold leading-tight">Jastip ID</div>
               <div className="text-sm text-gray-600">Jasa Titip & Ekspedisi – Surabaya</div>
