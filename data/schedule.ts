@@ -12,7 +12,7 @@ export const weeklySailings: WeeklySailing[] = [
     id: "dlu-maumere",
     route: "Surabaya → Maumere",
     operator: "Darma Lautan Utama",
-    dateISO: "2025-11-1", // <-- UBAH SETIAP MINGGU
+    dateISO: "2025-11-01", // <-- UBAH SETIAP MINGGU
   },
 ];
 
