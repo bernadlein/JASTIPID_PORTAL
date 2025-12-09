@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import type { Shipping } from "@/data/shipping";
 import { shippingList } from "@/data/shipping";
 
 function formatIDR(n: number) {
@@ -12,15 +11,22 @@ export default function PriceCalculator({ mainWA }: { mainWA: string }) {
   const [routeId, setRouteId] = useState(shippingList[0]?.id ?? "");
   const [weight, setWeight] = useState<number>(1);
 
-  const selectedRoute = shippingList.find((s) => s.id === routeId);
-  const subtotal = selectedRoute ? selectedRoute.pricePerKg * (weight || 0) : 0;
+  const selectedRoute =
+    shippingList.find((s) => s.id === routeId) ?? shippingList[0];
+
+  const subtotal = selectedRoute
+    ? selectedRoute.pricePerKg * (weight || 0)
+    : 0;
 
   const waText = selectedRoute
-    ? `Halo kak, saya mau tanya ongkir dan kirim barang.\n\nRute: ${selectedRoute.label}\nBerat: ${weight} kg\nPerkiraan biaya: Rp ${formatIDR(
+    ? `Halo kak, saya mau tanya ongkir dan kirim barang.\n\nRute: ${
+        selectedRoute.label
+      }\nBerat: ${weight} kg\nPerkiraan biaya: Rp ${formatIDR(
         subtotal
       )}\n\nMohon info cara lanjut order ya.`
     : "Halo kak, saya mau tanya jastip / kirim barang.";
 
+  // mainWA sebaiknya format: 62812xxxx (tanpa +)
   const waLink = `https://wa.me/${mainWA}?text=${encodeURIComponent(waText)}`;
 
   return (
@@ -30,11 +36,12 @@ export default function PriceCalculator({ mainWA }: { mainWA: string }) {
         Pilih rute dan estimasi berat barang kamu.
       </p>
 
-      <div className="grid sm:grid-cols-2 gap-4 mb-4">
-        <label className="grid gap-1 text-sm">
+      {/* Rute & Berat – layout grid, nggak saling nutup */}
+      <div className="grid gap-3 sm:grid-cols-2 mb-4">
+        <label className="flex flex-col gap-1 text-sm min-w-0">
           <span>Rute</span>
           <select
-            className="border rounded-lg px-3 py-2 text-sm"
+            className="w-full border rounded-lg px-3 py-2 text-sm"
             value={routeId}
             onChange={(e) => setRouteId(e.target.value)}
           >
@@ -46,15 +53,17 @@ export default function PriceCalculator({ mainWA }: { mainWA: string }) {
           </select>
         </label>
 
-        <label className="grid gap-1 text-sm">
+        <label className="flex flex-col gap-1 text-sm min-w-0">
           <span>Berat (kg)</span>
           <input
             type="number"
             min={0.5}
             step={0.5}
-            className="border rounded-lg px-3 py-2 text-sm"
+            className="w-full border rounded-lg px-3 py-2 text-sm"
             value={weight}
-            onChange={(e) => setWeight(parseFloat(e.target.value) || 0)}
+            onChange={(e) =>
+              setWeight(e.target.value === "" ? 0 : parseFloat(e.target.value))
+            }
           />
         </label>
       </div>
@@ -77,7 +86,7 @@ export default function PriceCalculator({ mainWA }: { mainWA: string }) {
         rel="noreferrer"
         className="inline-flex items-center justify-center w-full sm:w-auto px-4 py-2 rounded-xl bg-green-600 hover:bg-green-700 text-white text-sm font-medium"
       >
-        Konsultasi & Lanjut via WhatsApp
+        Konsultasi &amp; Lanjut via WhatsApp
       </a>
     </div>
   );
