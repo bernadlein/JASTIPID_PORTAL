@@ -1,9 +1,9 @@
 export const orderAddress = `Perum. Alana Regency Tambak Oso
-Blok E11 no 02 Kec. Waru Sidoarjo
+Blok J4 no 37 Kec. Waru Sidoarjo
 61256  (NAMA PEMESAN)`;
 
 export const orderFormats: { route: string; format: string }[] = [
-  { route: "Adonara Waiwerang", format: "WID/Nama Pemesan/Kota" },
+  { route: "Adonara Waiwerang", format: "Bernad/Nama Pemesan/Kota" },
   { route: "Adonara Witihama", format: "MG/Nama Pemesan/Kota" },
   { route: "Larantuka", format: "NMG/Nama Pemesan/Kota" },
   { route: "Lembata", format: "JID1/Nama Pemesan/Kota" },
